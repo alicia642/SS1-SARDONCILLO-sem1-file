@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
     $third_quarter =$_POST['thirdquarter'];
     $fourth_quarter =$_POST['fourthquarter'];
 
-    $averageGrade = ($first_quarter + $second_quarter + $third_quarter + $fourthquarter);
+     $averageGrade = ($first_quarter + $second_quarter + $third_quarter + $fourth_quarter) / 4;
 
 if ($averageGrade >= 98 && $averageGrade <=96) {
    echo "Your average grade is: " . $averageGrade;
