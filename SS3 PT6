@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<body>
+     <title>- Item Order </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <form method="post">
+        <h1>Select your order here</h1>
+        <select name="order" id="order">
+            <option value="1">Burger- 100</option>
+            <option value="2">lemon- 150</option>
+            <option value="3">apple- 200</option>
+            <option value="4">coke- 157</option>
+            <option value="5">probin- 110</option>
+        </select>
+        <br><br>
+        
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity">
+        <br><br>
+        <label for="takeout">Takeout:</label>
+        <input type="checkbox" name="takeout" id="takeout">
+        <br>
+        <label for="dine_in">Dine in:</label>
+        <input type="checkbox" name="dine_in" id="dine_in">
+        <br>
+        <input type="submit" value="Calculate Total">
+    </form>
+
+    <?php 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $menu_items = ["Burger","lemon","apple","coke","probin"];
+        $prices = [100, 150, 200, 157, 110];
+
+        $choice = intval($_POST["order"]);
+        $quantity = intval($_POST["quantity"]);
+        $is_takeout = isset($_POST["takeout"]);
+        
+        if ($choice < 1 || $choice > 5 || $quantity <= 0) {
+            echo "<p>Invalid input!</p>";
+            exit;
+        }
+
+        $order = $menu_items[$choice - 1];
+        $price = $prices[$choice - 1];
+        $subtotal = $price * $quantity;
+        $tax = $is_takeout ? $subtotal * 0.12 : 0;
+        $total_amount = $subtotal + $tax;
+        $order_type = $is_takeout ? "Take-out" : "Dine-in";
+
+        echo "<div class='order-summary-container'>";
+        echo "<div class='order-summary'>";
+        echo "<p><strong>Order Summary:</strong></p>";
+        echo "<p>Item: $order</p>";
+        echo "<p>Quantity: $quantity</p>";
+        echo "<p>Order Type: $order_type</p>";
+        echo "<p>Total Amount:  ₱" . number_format($total_amount, 2) . "</p>";
+        echo "</div>";
+        echo "</div>";
+    }
+    ?>
+</body>
+</html>
